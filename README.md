@@ -1,5 +1,4 @@
 # Chemical-Laboratory-Management-System
-# chemical-laboratory-management-system
 Chemical Laboratory Management System (CLMS) – A digital platform for managing chemical inventory, safety, experiment tracking, and laboratory operations.
 System Objectives
 
