@@ -171,8 +171,6 @@ Equipment reservation module
 ## Strukturë Projekti
 - `/backend`: logjika server, routes, controllers, models
 - `/frontend`: React/Angular components dhe pages
-- `/database`: schema, seed data
-- `/docs`: dokumentacioni (SRS, diagramat)
 - `.gitignore`: për të shmangur files të panevojshme
 - `README.md`: ky dokument
 
