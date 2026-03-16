@@ -145,6 +145,42 @@ Experiment logging
 
 Equipment reservation module
 
+## User Stories Prioritare (Must Have)
+- US-01: User Registration
+- US-02: Secure Login (2FA)
+- US-03: Role-Based Access
+- US-04: Register Chemical
+- US-05: Expiry Alert
+- US-06: Minimum Stock Alert
+- US-07: Request Chemical
+- US-08: Multi-Level Approval
+- US-10: Automatic Quantity Deduction
+- US-12: Hazard Access Restriction
+- US-18: Immutable Audit Log
+- US-20: Automated Backup
+- US-21: Performance Requirement
+
+## Teknologjitë e Përdorura
+- Backend: Node.js + Express / Spring Boot / Django
+- Database: PostgreSQL / MySQL
+- Frontend: React / Angular
+- Auth: JWT + 2FA
+- Notifications: Email / Push Notifications
+- Version Control: Git + GitHub
+
+## Strukturë Projekti
+- `/backend`: logjika server, routes, controllers, models
+- `/frontend`: React/Angular components dhe pages
+- `/database`: schema, seed data
+- `/docs`: dokumentacioni (SRS, diagramat)
+- `.gitignore`: për të shmangur files të panevojshme
+- `README.md`: ky dokument
+
+## Instalimi dhe Run
+1. Klono repository:
+```bash
+git clone https://github.com/Hataz511/Chemical-Laboratory-Management-System1.git
+
 Phase 3:
 
 Advanced reporting
