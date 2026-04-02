@@ -1,4 +1,4 @@
-README.md (VERSION FINAL – 100/100)
+
 # Chemical Laboratory Management System (CLMS) 🧪
 
 ## 📌 Project Overview
