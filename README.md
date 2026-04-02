@@ -1,5 +1,4 @@
 
-📄 README.md 
 # Chemical Laboratory Management System (CLMS) 🧪
 
 ## 📌 Project Overview
