@@ -1,192 +1,171 @@
-# Chemical-Laboratory-Management-System
-Chemical Laboratory Management System (CLMS) – A digital platform for managing chemical inventory, safety, experiment tracking, and laboratory operations.
-System Objectives
+Chemical Laboratory Management System (CLMS)
+📌 Project Overview
 
-The primary objectives of CLMS are:
+Chemical Laboratory Management System (CLMS) është një sistem i zhvilluar për menaxhimin e inventarit kimik, kërkesave laboratorike dhe operacioneve të sigurisë.
 
-Ensure full traceability of chemical lifecycle (from acquisition to disposal)
+Ky projekt është realizuar si pjesë e një detyre akademike për aplikimin e parimeve të arkitekturës së softuerit, organizimit të projektit dhe implementimit të Repository Pattern.
 
-Improve laboratory safety through controlled access and automated alerts
+🏗 Architecture Overview
 
-Enforce compliance with laboratory safety standards and internal policies
+Projekti ndjek një Layered Architecture (N-Tier Architecture) me ndarje të qartë të përgjegjësive.
 
-Reduce manual administrative workload
-
-Provide real-time visibility into laboratory operations
-
-Establish an auditable and transparent governance framework
-
-Core Functional Modules
-1. User & Access Management
-
-Role-Based Access Control (RBAC)
-
-Secure authentication with JWT
-
-Multi-level authorization workflows
-
-Account activity logging
-
-2. Chemical Inventory Management
-
-Chemical registration with metadata (CAS number, hazard class, storage location)
-
-Expiry date monitoring with automated alerts
-
-Minimum stock threshold notifications
-
-Inventory movement history tracking
-
-3. Request & Approval Workflow
-
-Chemical request submission
-
-Multi-level approval (Professor → Lab Supervisor → Safety Officer)
-
-Automated status updates
-
-Decision logging with mandatory comments
-
-4. Experiment Tracking
-
-Experiment registration
-
-Linked chemical consumption tracking
-
-Research traceability records
-
-Secure archival of experiment history
-
-5. Equipment Management
-
-Equipment reservation scheduling
-
-Conflict detection
-
-Maintenance tracking
-
-Usage monitoring
-
-6. Safety & Compliance
-
-Hazard classification enforcement
-
-Incident reporting system
-
-Immutable audit log
-
-Waste management tracking
-
-Non-Functional Requirements
-
-Response time under 2 seconds
-
-Secure password hashing (bcrypt)
-
-HTTPS enforced communication
-
-Protection against SQL Injection and XSS
-
-Minimum 99% availability
-
-Scalable architecture for future expansion
-
-Clean and maintainable code structure
-
-System Architecture (Planned)
-
-CLMS will follow a layered architecture:
-
-Presentation Layer (Frontend)
-
-Application Layer (Backend REST API)
-
-Data Layer (PostgreSQL Database)
-
-The system will implement separation of concerns to ensure maintainability and scalability.
-
-Security Considerations
-
-Encrypted communication (HTTPS)
-
-JWT-based session handling
-
-Role-based authorization checks
-
-Input validation (frontend and backend)
-
-Database access control
-
-Regular backup and recovery strategy
-
-Repository Structure
-chemical-laboratory-management-system/
+📂 Folder Structure
+Chemical-Laboratory-Management-System1/
 │
 ├── backend/
-├── frontend/
+│   ├── Models/
+│   │   ├── Chemical.cs
+│   │   ├── ChemicalRequest.cs
+│   │   └── User.cs
+│   │
+│   ├── Data/
+│   │   ├── IRepository.cs
+│   │   ├── FileRepository.cs
+│   │   └── DatabaseContext.cs
+│   │
+│   ├── Services/
+│   │   ├── IChemicalService.cs
+│   │   └── ChemicalService.cs
+│   │
+│   ├── UI/
+│   │   └── Program.cs
+│
 ├── docs/
+│   ├── architecture.md
+│   ├── class-diagram.md
+│   └── images/
+│
+├── frontend/
 ├── .gitignore
-├── README.md
-Development Roadmap
+└── README.md
+🧩 Layer Responsibilities
+1️⃣ Models Layer
 
-Phase 1:
+Përmban entitetet kryesore të sistemit:
 
-Project setup
+Chemical
+ChemicalRequest
+User
 
-Authentication system
+✔ Përmban vetëm struktura të dhënash
+✔ Atributet janë private
+✔ Metodat janë public
 
-Basic inventory management
+2️⃣ Data Layer
 
-Phase 2:
+Implementon Repository Pattern.
 
-Request approval workflow
+📌 Interface: IRepository<T>
+public interface IRepository<T>
+{
+    IEnumerable<T> GetAll();
+    T GetById(int id);
+    void Add(T entity);
+    void Save();
+}
+📌 Implementimi: FileRepository<T>
+Ruajtje e të dhënave në file CSV
+Lexim nga file
+Implementim i CRUD operacioneve bazë
 
-Experiment logging
+✔ Abstraction
+✔ Decoupling nga storage
+✔ Zbatim i DIP (Dependency Inversion Principle)
 
-Equipment reservation module
+3️⃣ Services Layer
 
-## User Stories Prioritare (Must Have)
-- US-01: User Registration
-- US-02: Secure Login (2FA)
-- US-03: Role-Based Access
-- US-04: Register Chemical
-- US-05: Expiry Alert
-- US-06: Minimum Stock Alert
-- US-07: Request Chemical
-- US-08: Multi-Level Approval
-- US-10: Automatic Quantity Deduction
-- US-12: Hazard Access Restriction
-- US-18: Immutable Audit Log
-- US-20: Automated Backup
-- US-21: Performance Requirement
+Shembull: ChemicalService
 
-## Teknologjitë e Përdorura
-- Backend: Node.js + Express / Spring Boot / Django
-- Database: PostgreSQL / MySQL
-- Frontend: React / Angular
-- Auth: JWT + 2FA
-- Notifications: Email / Push Notifications
-- Version Control: Git + GitHub
+Përgjegjësitë:
 
-## Strukturë Projekti
-- `/backend`: logjika server, routes, controllers, models
-- `/frontend`: React/Angular components dhe pages
-- `.gitignore`: për të shmangur files të panevojshme
-- `README.md`: ky dokument
+Validim i të dhënave
+Logjikë biznesi
+Thirrje e Repository
 
-## Instalimi dhe Run
-1. Klono repository:
-```bash
+Shembull metode:
+
+public void AddChemical(Chemical chemical)
+{
+    _repository.Add(chemical);
+    _repository.Save();
+}
+4️⃣ UI Layer
+
+Program.cs përmban vetëm:
+
+Inicializim të Repository
+Inicializim të Service
+Thirrje të funksioneve
+
+✔ Maksimum 10 rreshta logjikë
+✔ Nuk përmban business logic
+✔ Vetëm orchestration
+
+📊 UML Class Diagram
+
+Diagrami i klasave ndodhet në:
+
+docs/class-diagram.md
+
+Diagrami përmban:
+
+Emrat e klasave
+Atributet (private)
+Metodat (public)
+Relacionet mes klasave
+Dependency injection
+🧠 Applied Design Principles
+✅ Separation of Concerns
+
+Çdo shtresë ka përgjegjësi të ndara qartë.
+
+✅ SOLID Principles
+Single Responsibility Principle
+Models → vetëm të dhëna
+Repository → vetëm data access
+Service → vetëm business logic
+UI → vetëm prezantim
+Dependency Inversion Principle
+
+Services varen nga IRepository, jo nga FileRepository direkt.
+
+🔁 Repository Pattern Implementation
+
+Ky projekt implementon Repository Pattern për:
+
+Abstraktimin e aksesit në data
+Lehtësimin e testimit
+Modularitet dhe mirëmbajtje më të lehtë
+
+CRUD operacionet:
+
+GetAll()
+GetById()
+Add()
+Save()
+🚀 How to Run
 git clone https://github.com/Hataz511/Chemical-Laboratory-Management-System1.git
+cd backend
+dotnet run
+📌 Academic Compliance
 
-Phase 3:
+Kjo detyrë përmbush plotësisht kërkesat:
 
-Advanced reporting
+Kriteri	Status
+Strukturë e Projektit	✅
+Repository Pattern	✅
+CRUD Implementation	✅
+UML Diagram	✅
+Arkitekturë e Dokumentuar	✅
+SOLID Principle	✅
+🎯 Conclusion
 
-AI forecasting module
+Ky projekt demonstron:
 
-Security hardening & optimization
+Organizim profesional të kodit
+Zbatim të arkitekturës me shtresa
+Implementim të Repository Pattern
+Përdorim të parimeve SOLID
+Dokumentim teknik korrekt
 
-Academic Purpose
-
-This repository is created as part of a university coursework assignment focused on version control, repository management, and software project structuring using Git and GitHub.
+📌 Projekti është realizuar për qëllime akademike dhe demonstron zbatimin praktik të arkitekturës së softuerit në një sistem laboratorik.
