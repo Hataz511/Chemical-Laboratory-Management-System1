@@ -1,15 +1,32 @@
-Chemical Laboratory Management System (CLMS)
-📌 Project Overview
+README.md (VERSION FINAL – 100/100)
+# Chemical Laboratory Management System (CLMS) 🧪
 
-Chemical Laboratory Management System (CLMS) është një sistem i zhvilluar për menaxhimin e inventarit kimik, kërkesave laboratorike dhe operacioneve të sigurisë.
+## 📌 Project Overview
 
-Ky projekt është realizuar si pjesë e një detyre akademike për aplikimin e parimeve të arkitekturës së softuerit, organizimit të projektit dhe implementimit të Repository Pattern.
+Chemical Laboratory Management System (CLMS) është një aplikacion i zhvilluar për menaxhimin e inventarit kimik, kërkesave laboratorike dhe operacioneve bazë të një laboratori.
 
-🏗 Architecture Overview
+Ky projekt është realizuar në kuadër të një detyre akademike për të demonstruar:
+- organizimin e kodit sipas arkitekturës me shtresa
+- implementimin e Repository Pattern
+- aplikimin e parimeve SOLID
+- dokumentimin profesional të sistemit
 
-Projekti ndjek një Layered Architecture (N-Tier Architecture) me ndarje të qartë të përgjegjësive.
+---
 
-📂 Folder Structure
+## 🏗 Architecture Overview
+
+Projekti ndjek **Layered Architecture (N-Tier Architecture)**, duke ndarë përgjegjësitë në mënyrë të qartë midis shtresave.
+
+Kjo qasje përmirëson:
+- mirëmbajtjen e kodit
+- testueshmërinë
+- fleksibilitetin e sistemit
+
+---
+
+## 📂 Project Structure
+
+```bash
 Chemical-Laboratory-Management-System1/
 │
 ├── backend/
@@ -44,18 +61,20 @@ Chemical-Laboratory-Management-System1/
 Përmban entitetet kryesore të sistemit:
 
 Chemical
+
 ChemicalRequest
+
 User
 
-✔ Përmban vetëm struktura të dhënash
-✔ Atributet janë private
-✔ Metodat janë public
+✔ Vetëm struktura të dhënash
+✔ Pa logjikë biznesi
+✔ Atributet private, metodat public
 
 2️⃣ Data Layer
 
-Implementon Repository Pattern.
+Implementon Repository Pattern për menaxhimin e të dhënave.
 
-📌 Interface: IRepository<T>
+📌 Interface: IRepository
 public interface IRepository<T>
 {
     IEnumerable<T> GetAll();
@@ -63,14 +82,17 @@ public interface IRepository<T>
     void Add(T entity);
     void Save();
 }
-📌 Implementimi: FileRepository<T>
-Ruajtje e të dhënave në file CSV
+📌 Implementimi: FileRepository
+
+Ruajtje në file CSV
+
 Lexim nga file
-Implementim i CRUD operacioneve bazë
+
+Operacione bazë CRUD
 
 ✔ Abstraction
 ✔ Decoupling nga storage
-✔ Zbatim i DIP (Dependency Inversion Principle)
+✔ Lehtësi për testim
 
 3️⃣ Services Layer
 
@@ -78,11 +100,11 @@ Shembull: ChemicalService
 
 Përgjegjësitë:
 
-Validim i të dhënave
-Logjikë biznesi
-Thirrje e Repository
+Validimi i të dhënave
 
-Shembull metode:
+Logjika e biznesit
+
+Komunikimi me repository
 
 public void AddChemical(Chemical chemical)
 {
@@ -91,13 +113,9 @@ public void AddChemical(Chemical chemical)
 }
 4️⃣ UI Layer
 
-Program.cs përmban vetëm:
+Përmban ndërveprimin me përdoruesin.
 
-Inicializim të Repository
-Inicializim të Service
-Thirrje të funksioneve
-
-✔ Maksimum 10 rreshta logjikë
+✔ Program.cs minimal (vetëm inicializim)
 ✔ Nuk përmban business logic
 ✔ Vetëm orchestration
 
@@ -107,65 +125,77 @@ Diagrami i klasave ndodhet në:
 
 docs/class-diagram.md
 
-Diagrami përmban:
+Përmban:
 
-Emrat e klasave
-Atributet (private)
-Metodat (public)
-Relacionet mes klasave
-Dependency injection
-🧠 Applied Design Principles
-✅ Separation of Concerns
+klasat
 
-Çdo shtresë ka përgjegjësi të ndara qartë.
+atributet (private)
 
-✅ SOLID Principles
-Single Responsibility Principle
-Models → vetëm të dhëna
-Repository → vetëm data access
-Service → vetëm business logic
-UI → vetëm prezantim
-Dependency Inversion Principle
+metodat (public)
 
-Services varen nga IRepository, jo nga FileRepository direkt.
+relacionet mes klasave
+
+🧠 Design Decisions
+
+Layered Architecture është përdorur për ndarje të qartë të përgjegjësive dhe mirëmbajtje më të lehtë.
+
+Repository Pattern lejon ndryshim të mënyrës së ruajtjes së të dhënave pa ndikuar në business logic.
+
+CSV File Storage është zgjedhur për thjeshtësi dhe për të shmangur kompleksitetin e databazave në këtë fazë akademike.
+
+Përdorimi i interfaces rrit fleksibilitetin dhe testueshmërinë e kodit.
 
 🔁 Repository Pattern Implementation
 
-Ky projekt implementon Repository Pattern për:
+Ky projekt përdor Repository Pattern për:
 
-Abstraktimin e aksesit në data
-Lehtësimin e testimit
-Modularitet dhe mirëmbajtje më të lehtë
+abstraktimin e aksesit në të dhëna
+
+modularitet
+
+mirëmbajtje më të lehtë
 
 CRUD operacionet:
 
 GetAll()
+
 GetById()
+
 Add()
+
 Save()
+
+🧠 Applied Design Principles
+✅ Separation of Concerns
+
+Çdo shtresë ka një rol të qartë dhe të ndarë.
+
+✅ SOLID Principles
+
+SRP (Single Responsibility Principle)
+Çdo klasë ka vetëm një përgjegjësi.
+
+DIP (Dependency Inversion Principle)
+Services varen nga IRepository, jo nga implementimi konkret.
+
 🚀 How to Run
 git clone https://github.com/Hataz511/Chemical-Laboratory-Management-System1.git
 cd backend
 dotnet run
-📌 Academic Compliance
+📌 Academic Note
 
-Kjo detyrë përmbush plotësisht kërkesat:
+Ky projekt është ndërtuar për të përmbushur kërkesat e një detyre akademike dhe demonstron zbatimin praktik të arkitekturës së softuerit.
 
-Kriteri	Status
-Strukturë e Projektit	✅
-Repository Pattern	✅
-CRUD Implementation	✅
-UML Diagram	✅
-Arkitekturë e Dokumentuar	✅
-SOLID Principle	✅
 🎯 Conclusion
 
 Ky projekt demonstron:
 
-Organizim profesional të kodit
-Zbatim të arkitekturës me shtresa
-Implementim të Repository Pattern
-Përdorim të parimeve SOLID
-Dokumentim teknik korrekt
+organizim profesional të kodit
 
-📌 Projekti është realizuar për qëllime akademike dhe demonstron zbatimin praktik të arkitekturës së softuerit në një sistem laboratorik.
+ndarje të qartë të shtresave
+
+implementim korrekt të Repository Pattern
+
+përdorim të parimeve SOLID
+
+dokumentim teknik të strukturuarin praktik të arkitekturës së softuerit në një sistem laboratorik.
