@@ -4,7 +4,7 @@ class Program
     {
         var repo = new FileRepository<Chemical>("chemicals.csv");
         var service = new ChemicalService(repo);
-        var ui = new Menu(service);
+        var ui = new ConsoleUI(service);
 
         ui.Start();
     }
