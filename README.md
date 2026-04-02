@@ -1,26 +1,30 @@
 
+📄 README.md 
 # Chemical Laboratory Management System (CLMS) 🧪
 
 ## 📌 Project Overview
 
-Chemical Laboratory Management System (CLMS) është një aplikacion i zhvilluar për menaxhimin e inventarit kimik, kërkesave laboratorike dhe operacioneve bazë të një laboratori.
+Chemical Laboratory Management System (CLMS) është një aplikacion për menaxhimin e inventarit kimik, kërkesave laboratorike dhe operacioneve bazë të një laboratori.
 
-Ky projekt është realizuar në kuadër të një detyre akademike për të demonstruar:
-- organizimin e kodit sipas arkitekturës me shtresa
+Ky projekt është realizuar në kuadër të një detyre akademike dhe demonstron:
+
+- organizimin e kodit sipas arkitekturës me shtresa (Layered Architecture)
 - implementimin e Repository Pattern
 - aplikimin e parimeve SOLID
-- dokumentimin profesional të sistemit
+- ndarjen e përgjegjësive (Separation of Concerns)
+- dokumentimin teknik profesional
 
 ---
 
 ## 🏗 Architecture Overview
 
-Projekti ndjek **Layered Architecture (N-Tier Architecture)**, duke ndarë përgjegjësitë në mënyrë të qartë midis shtresave.
+Projekti ndjek **Layered Architecture (N-Tier Architecture)** duke ndarë sistemin në shtresa të pavarura.
 
-Kjo qasje përmirëson:
-- mirëmbajtjen e kodit
-- testueshmërinë
-- fleksibilitetin e sistemit
+### 🎯 Përfitimet:
+- mirëmbajtje më e lehtë
+- kod më i organizuar dhe i lexueshëm
+- fleksibilitet për ndryshime të ardhshme
+- testueshmëri më e mirë
 
 ---
 
@@ -45,7 +49,9 @@ Chemical-Laboratory-Management-System1/
 │   │   └── ChemicalService.cs
 │   │
 │   ├── UI/
-│   │   └── Program.cs
+│   │   └── ConsoleUI.cs
+│   │
+│   └── Program.cs
 │
 ├── docs/
 │   ├── architecture.md
@@ -58,7 +64,7 @@ Chemical-Laboratory-Management-System1/
 🧩 Layer Responsibilities
 1️⃣ Models Layer
 
-Përmban entitetet kryesore të sistemit:
+Përmban entitetet:
 
 Chemical
 
@@ -68,11 +74,11 @@ User
 
 ✔ Vetëm struktura të dhënash
 ✔ Pa logjikë biznesi
-✔ Atributet private, metodat public
+✔ Atributet të encapsulated (private / properties)
 
 2️⃣ Data Layer
 
-Implementon Repository Pattern për menaxhimin e të dhënave.
+Implementon Repository Pattern.
 
 📌 Interface: IRepository
 public interface IRepository<T>
@@ -84,15 +90,19 @@ public interface IRepository<T>
 }
 📌 Implementimi: FileRepository
 
-Ruajtje në file CSV
+Ruajtje e të dhënave në file CSV
 
-Lexim nga file
+Lexim nga file CSV
 
 Operacione bazë CRUD
 
-✔ Abstraction
-✔ Decoupling nga storage
-✔ Lehtësi për testim
+✔ Përfitimet:
+
+Abstraction nga storage
+
+Decoupling
+
+Lehtësi për testim dhe ndryshim të storage (p.sh. DB në të ardhmen)
 
 3️⃣ Services Layer
 
@@ -102,9 +112,9 @@ Përgjegjësitë:
 
 Validimi i të dhënave
 
-Logjika e biznesit
+Logjikë biznesi
 
-Komunikimi me repository
+Thirrje e repository
 
 public void AddChemical(Chemical chemical)
 {
@@ -113,15 +123,28 @@ public void AddChemical(Chemical chemical)
 }
 4️⃣ UI Layer
 
-Përmban ndërveprimin me përdoruesin.
+Implementuar me ConsoleUI.
 
-✔ Program.cs minimal (vetëm inicializim)
+✔ Ndërveprim me përdoruesin
 ✔ Nuk përmban business logic
-✔ Vetëm orchestration
+✔ Thirr vetëm Services
+
+5️⃣ Program.cs
+static void Main(string[] args)
+{
+    var repo = new FileRepository<Chemical>("chemicals.csv");
+    var service = new ChemicalService(repo);
+    var ui = new ConsoleUI(service);
+
+    ui.Start();
+}
+
+✔ Minimal (vetëm inicializim)
+✔ Respekton arkitekturën
 
 📊 UML Class Diagram
 
-Diagrami i klasave ndodhet në:
+Diagrami gjendet në:
 
 docs/class-diagram.md
 
@@ -133,27 +156,27 @@ atributet (private)
 
 metodat (public)
 
-relacionet mes klasave
+relacionet (association, dependency)
 
 🧠 Design Decisions
 
-Layered Architecture është përdorur për ndarje të qartë të përgjegjësive dhe mirëmbajtje më të lehtë.
+Layered Architecture → ndarje e përgjegjësive dhe mirëmbajtje më e lehtë
 
-Repository Pattern lejon ndryshim të mënyrës së ruajtjes së të dhënave pa ndikuar në business logic.
+Repository Pattern → izolim i logjikës së aksesit në të dhëna
 
-CSV File Storage është zgjedhur për thjeshtësi dhe për të shmangur kompleksitetin e databazave në këtë fazë akademike.
+CSV Storage → zgjidhje e thjeshtë për fazë akademike
 
-Përdorimi i interfaces rrit fleksibilitetin dhe testueshmërinë e kodit.
+Interfaces (IRepository) → fleksibilitet dhe testueshmëri
 
 🔁 Repository Pattern Implementation
 
 Ky projekt përdor Repository Pattern për:
 
-abstraktimin e aksesit në të dhëna
+abstraktimin e aksesit në data
 
 modularitet
 
-mirëmbajtje më të lehtë
+mirëmbajtje
 
 CRUD operacionet:
 
@@ -168,15 +191,33 @@ Save()
 🧠 Applied Design Principles
 ✅ Separation of Concerns
 
-Çdo shtresë ka një rol të qartë dhe të ndarë.
+Çdo shtresë ka një rol të ndarë dhe të qartë.
 
 ✅ SOLID Principles
 
 SRP (Single Responsibility Principle)
-Çdo klasë ka vetëm një përgjegjësi.
+Çdo klasë ka një përgjegjësi të vetme.
 
 DIP (Dependency Inversion Principle)
-Services varen nga IRepository, jo nga implementimi konkret.
+Services varen nga interface (IRepository), jo nga implementimi konkret.
+
+⚠️ Limitations
+
+Nuk përdoret databazë reale (përdoret CSV)
+
+Nuk ka autentifikim përdoruesi
+
+Nuk ka GUI (vetëm Console UI)
+
+🔮 Future Improvements
+
+Integrim me databazë (SQL Server / MySQL)
+
+Ndërtimi i një GUI (WinForms / Web)
+
+Shtimi i autentifikimit dhe roleve
+
+Implementim i logging dhe error handling
 
 🚀 How to Run
 git clone https://github.com/Hataz511/Chemical-Laboratory-Management-System1.git
@@ -184,7 +225,7 @@ cd backend
 dotnet run
 📌 Academic Note
 
-Ky projekt është ndërtuar për të përmbushur kërkesat e një detyre akademike dhe demonstron zbatimin praktik të arkitekturës së softuerit.
+Ky projekt është ndërtuar për qëllime akademike dhe demonstron zbatimin praktik të arkitekturës së softuerit dhe dizajnit të sistemeve.
 
 🎯 Conclusion
 
@@ -192,10 +233,12 @@ Ky projekt demonstron:
 
 organizim profesional të kodit
 
-ndarje të qartë të shtresave
+arkitekturë të ndarë në shtresa
 
 implementim korrekt të Repository Pattern
 
 përdorim të parimeve SOLID
+
+dokumentim teknik të strukturuar dhe të qartë
 
 dokumentim teknik të strukturuarin praktik të arkitekturës së softuerit në një sistem laboratorik.
